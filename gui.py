@@ -281,9 +281,23 @@ def average(files, self):
 def subtract(image, calibration):
     return cv2.subtract(image, calibration)
 
-# small function for dividing two images
+# small function for dividing an image by a flat
 def divide(image, calibration):
-    return cv2.divide(image, calibration)
+    image = img_as_float(image)
+    calibration = img_as_float(calibration)
+    b,g,r,_= cv2.mean(calibration)
+    if image.shape[2] is 3:
+        cal = cv2.split(calibration)
+        img = cv2.split(image)
+        image_R = ((img[2] * r) / cal[2])
+        image_G = ((img[1] * g) / cal[1])
+        image_B = ((img[0] * b) / cal[0])
+        image = cv2.merge([image_B, image_G, image_R])
+    else:
+        image = (image * r) / calibration
+
+    image[image > 1] = 1
+    return img_as_uint(image)
 
 # this function sets global variable of choosen directory
 def choose_dir(self, mode):
@@ -307,15 +321,15 @@ def choose_dir(self, mode):
             for file in dir:
                 if os.path.isfile(directory + "/" + file):
                     self.list_darks.addItem(directory + "/" + file)
-        #elif mode is 2:
-            #global flatsdir
-            #flatsdir = directory
-            #self.list_flats.clear()
-            #print("Selected directory with flat frames: " + directory)
-            #dir = sorted(os.listdir(directory))
-            #for file in dir:
-            #    if os.path.isfile(directory + "/" + file):
-            #        self.list_flats.addItem(directory + "/" + file)
+        elif mode is 2:
+            global flatsdir
+            flatsdir = directory
+            self.list_flats.clear()
+            print("Selected directory with flat frames: " + directory)
+            dir = sorted(os.listdir(directory))
+            for file in dir:
+                if os.path.isfile(directory + "/" + file):
+                    self.list_flats.addItem(directory + "/" + file)
         elif mode is 3:
             global biasdir
             biasdir = directory
@@ -330,7 +344,7 @@ def choose_dir(self, mode):
 def process_images(self):
     bias_bool = False
     dark_bool = False
-    #flat_bool = False
+    flat_bool = False
     if 'biasdir' in locals() or 'biasdir' in globals():
         if biasdir is not None and biasdir is not "":
             print("Stacking bias...")
@@ -357,17 +371,17 @@ def process_images(self):
                 print("Couldn't stack dark frames")
             print("Done.")
 
-    #if 'flatsdir' in locals() or 'flatsdir' in globals():
-        #if flatsdir is not None and flatsdir is not "":
-            #print("Stacking flats...")
-            #flat_bool = True
-            #global master_flat
-            #try:
-                #master_flat = average(flatsdir, self)
-            #except Exception as e:
-                #print(e)
-                #print("Couldn't stack flat frames")
-            #print("Done.")
+    if 'flatsdir' in locals() or 'flatsdir' in globals():
+        if flatsdir is not None and flatsdir is not "":
+            print("Stacking flats...")
+            flat_bool = True
+            global master_flat
+            try:
+                master_flat = average(flatsdir, self)
+            except Exception as e:
+                print(e)
+                print("Couldn't stack flat frames")
+            print("Done.")
 
     if lightdir is not None and lightdir is not "":
         if bias_bool or dark_bool or flat_bool:
@@ -453,7 +467,7 @@ class MainDialog(QMainWindow):
 
         self.choose_lights.clicked.connect(partial(choose_dir, self, 0))
         self.choose_darks.clicked.connect(partial(choose_dir, self, 1))
-        #self.choose_flats.clicked.connect(partial(choose_dir, self, 2))
+        self.choose_flats.clicked.connect(partial(choose_dir, self, 2))
         self.choose_bias.clicked.connect(partial(choose_dir, self, 3))
 
         self.threshold.valueChanged.connect(self.thresholdchange)

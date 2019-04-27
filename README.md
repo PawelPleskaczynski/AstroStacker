@@ -3,7 +3,7 @@ This application is used for pre-processing astronomical images. For now,
 here's what's working and what will be added:
 ##### Working
 - Average stacking of image sets
-- Calibrating lights with darks and bias frames
+- Calibrating lights with darks, flat and bias frames
 - Star alignment using triangle similarity
 - Setting threshold of star detection
 
@@ -14,7 +14,6 @@ here's what's working and what will be added:
 - Writing to various formats, like FITS, TIFF
 - More stacking methods (median, average, maximum, minimum)
 - Pixel rejection algorithms for stacking
-- Flat calibration
 
 ### Installation
 1. Clone this git repository: `git clone https://github.com/PawelPleskaczynski/AstroStacker.git`
@@ -32,7 +31,7 @@ here's what's working and what will be added:
 
 ### How to use
 1. Launch the application with `python gui.py`
-2. Load needed frames (you need to provide light frames, dark, and bias
+2. Load needed frames (you need to provide light frames, dark, flat and bias
   frames are optional)
 3. Test number of detected stars (more stars = slower, but more
   precise alignment)

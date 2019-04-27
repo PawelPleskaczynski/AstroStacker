@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>638</width>
+    <width>849</width>
     <height>604</height>
    </rect>
   </property>
@@ -20,8 +20,8 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>490</x>
-      <y>340</y>
+      <x>700</x>
+      <y>360</y>
       <width>84</width>
       <height>34</height>
      </rect>
@@ -50,10 +50,23 @@
      </rect>
     </property>
    </widget>
-   <widget class="QListWidget" name="list_bias">
+   <widget class="QListWidget" name="list_flats">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>430</x>
+      <y>20</y>
+      <width>201</width>
+      <height>251</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="list_bias">
+    <property name="geometry">
+     <rect>
+      <x>640</x>
       <y>20</y>
       <width>201</width>
       <height>251</height>
@@ -86,10 +99,26 @@
      <string>Dark frames</string>
     </property>
    </widget>
-   <widget class="QLabel" name="file_label_bias">
+   <widget class="QLabel" name="file_label_flats">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>430</x>
+      <y>0</y>
+      <width>201</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Flat  frames</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="file_label_bias">
+    <property name="geometry">
+     <rect>
+      <x>640</x>
       <y>0</y>
       <width>201</width>
       <height>18</height>
@@ -105,8 +134,8 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>390</x>
-      <y>340</y>
+      <x>610</x>
+      <y>360</y>
       <width>84</width>
       <height>34</height>
      </rect>
@@ -118,7 +147,7 @@
    <widget class="QLabel" name="label_stars">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>310</x>
       <y>370</y>
       <width>141</width>
       <height>18</height>
@@ -131,8 +160,8 @@
    <widget class="QSpinBox" name="threshold">
     <property name="geometry">
      <rect>
-      <x>330</x>
-      <y>340</y>
+      <x>550</x>
+      <y>360</y>
       <width>52</width>
       <height>32</height>
      </rect>
@@ -144,8 +173,8 @@
    <widget class="QLabel" name="threshold_label">
     <property name="geometry">
      <rect>
-      <x>330</x>
-      <y>320</y>
+      <x>550</x>
+      <y>340</y>
       <width>141</width>
       <height>18</height>
      </rect>
@@ -193,10 +222,26 @@
      <string>Choose folder</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="choose_bias">
+   <widget class="QPushButton" name="choose_flats">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>480</x>
+      <y>280</y>
+      <width>101</width>
+      <height>34</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Choose folder</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="choose_bias">
+    <property name="geometry">
+     <rect>
+      <x>690</x>
       <y>280</y>
       <width>101</width>
       <height>34</height>
@@ -211,7 +256,7 @@
      <rect>
       <x>10</x>
       <y>410</y>
-      <width>621</width>
+      <width>831</width>
       <height>171</height>
      </rect>
     </property>
@@ -221,32 +266,6 @@
      </font>
     </property>
    </widget>
-  </widget>
-  <widget class="QMenuBar" name="menuBar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>638</width>
-     <height>30</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menu_About">
-    <property name="title">
-     <string>Post-proc&amp;essing</string>
-    </property>
-    <addaction name="actionLRGB_Combination"/>
-    <addaction name="actionNoise_reduction"/>
-    <addaction name="actionBackground_gradient_removal"/>
-   </widget>
-   <widget class="QMenu" name="menuAbou">
-    <property name="title">
-     <string>A&amp;bout</string>
-    </property>
-    <addaction name="actionSource_code_Readme"/>
-   </widget>
-   <addaction name="menu_About"/>
-   <addaction name="menuAbou"/>
   </widget>
   <action name="actionLRGB_Combination">
    <property name="text">
