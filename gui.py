@@ -285,16 +285,18 @@ def subtract(image, calibration):
 def divide(image, calibration):
     image = img_as_float(image)
     calibration = img_as_float(calibration)
-    b,g,r,_= cv2.mean(calibration)
-    if image.shape[2] is 3:
+    try:
+        image.shape[2]
+        b,g,r,_= cv2.mean(calibration)
         cal = cv2.split(calibration)
         img = cv2.split(image)
         image_R = ((img[2] * r) / cal[2])
         image_G = ((img[1] * g) / cal[1])
         image_B = ((img[0] * b) / cal[0])
         image = cv2.merge([image_B, image_G, image_R])
-    else:
-        image = (image * r) / calibration
+    except IndexError:        
+        mean = cv2.mean(calibration)[0]
+        image = ((image * mean) / calibration)
 
     image[image > 1] = 1
     return img_as_uint(image)
